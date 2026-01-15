@@ -1,0 +1,50 @@
+sources:
+  - name: landing
+    database: SLEEKMART_OMS
+    schema: L1_LANDING
+
+    tables:
+      - name: customers
+        identifier: customers
+      - name: orders
+        identifier: orders
+      - name: orderitems
+        identifier: orderitems
+
+  - name: data_lake
+    database: SLEEKMART_OMS
+    schema: L1_LANDING
+
+    tables:
+      - name: products
+        description: "External table for static product catalog reference data"
+        external:
+          location: "s3://projectcustrevenue/sourcedata/product/"
+          pattern: ".*product_catalog.csv"
+          file_format: "csv_format"
+          auto_refresh: false
+
+        columns:
+          - name: product_id
+            description: "Unique product identifier"
+            data_type: STRING
+
+          - name: product_name
+            description: "Product name"
+            data_type: STRING
+
+          - name: category_id
+            description: "Reference ID of product category"
+            data_type: STRING
+
+          - name: category_name
+            description: "Category name"
+            data_type: STRING
+
+          - name: subcategory_id
+            description: "Reference ID of product subcategory"
+            data_type: STRING
+
+          - name: subcategory_name
+            description: "Subcategory name"
+            data_type: STRING
